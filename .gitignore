@@ -1,0 +1,33 @@
+# Ignore everything
+*
+
+# Don't ignore markdown files at root level
+!*.md
+
+# Don't ignore .gitignore itself
+!.gitignore
+
+# Don't ignore the firstgame folder
+!firstgame(brackeys-tutorial)/
+
+# But ignore everything inside it by default
+firstgame(brackeys-tutorial)/*
+
+!firstgame(brackeys-tutorial)/.gitignore
+!firstgame(brackeys-tutorial)/.gitattributes
+# Don't ignore these specific folders and files
+!firstgame(brackeys-tutorial)/scenes/
+!firstgame(brackeys-tutorial)/scenes/**
+!firstgame(brackeys-tutorial)/scripts/
+!firstgame(brackeys-tutorial)/scripts/**
+!firstgame(brackeys-tutorial)/default_bus_layout.tres
+!firstgame(brackeys-tutorial)/project.godot
+
+# Still ignore these patterns
+**/*.import
+**/.godot/
+**/tmp/
+**/__pycache__/
+*.tmp
+*.bak
+**/*.uid
