@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbc53h2n84s2o"]
+
+[ext_resource type="Script" uid="uid://bfvvldougugdw" path="res://scripts/car.gd" id="1_jtldb"]
+[ext_resource type="Texture2D" uid="uid://d373r4spkf3w5" path="res://assets/car/car-body.png" id="2_3mrxu"]
+[ext_resource type="Texture2D" uid="uid://8jowlrg3x5cr" path="res://assets/car/car-wheel.png" id="4_4clw4"]
+
+[sub_resource type="GDScript" id="GDScript_50v30"]
+script/source = "extends RigidBody2D
+
+
+#func _physics_process(delta):
+	#if Input.is_action_pressed(\"ui_right\"):
+		#apply_torque(150)
+	#elif Input.is_action_pressed(\"ui_left\"):
+		#apply_torque(-150)
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ctevm"]
+radius = 60.075
+
+[node name="Car" type="Node2D"]
+script = ExtResource("1_jtldb")
+
+[node name="Body" type="RigidBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Body"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_3mrxu")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Body"]
+position = Vector2(-2.98023e-08, -4.76837e-07)
+scale = Vector2(0.1, 0.1)
+polygon = PackedVector2Array(-337.834, 27.5371, -325.824, -13.7065, -190.711, -59.1802, -102, -97, 85, -82, 173, -40, 317, -28, 317, -28, 337.731, 26.4796)
+
+[node name="WheelLeft" type="RigidBody2D" parent="."]
+position = Vector2(-22, 10)
+script = SubResource("GDScript_50v30")
+
+[node name="Sprite2D" type="Sprite2D" parent="WheelLeft"]
+position = Vector2(-1, -1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_4clw4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WheelLeft"]
+position = Vector2(-1, -1)
+scale = Vector2(0.1, 0.1)
+shape = SubResource("CircleShape2D_ctevm")
+
+[node name="WheelRight" type="RigidBody2D" parent="."]
+position = Vector2(23, 10)
+
+[node name="Sprite2D" type="Sprite2D" parent="WheelRight"]
+position = Vector2(-1, -1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_4clw4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WheelRight"]
+position = Vector2(-1, -1)
+scale = Vector2(0.1, 0.1)
+shape = SubResource("CircleShape2D_ctevm")
+
+[node name="PinJointLeft" type="PinJoint2D" parent="."]
+position = Vector2(-23, 9)
+scale = Vector2(0.1, 0.1)
+node_a = NodePath("../WheelLeft")
+node_b = NodePath("../Body")
+
+[node name="PinJointRight" type="PinJoint2D" parent="."]
+position = Vector2(22, 9)
+scale = Vector2(0.1, 0.1)
+node_a = NodePath("../WheelRight")
+node_b = NodePath("../Body")
